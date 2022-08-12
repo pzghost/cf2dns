@@ -145,6 +145,16 @@ def main(cloud):
             cf_cmips = sorted(cf_cmips, key=lambda i: i['latency'])[:2]
             cf_ctips = sorted(cf_ctips, key=lambda i: i['latency'])[:2]
 
+            print("CM:")
+            for cm in cf_cmips:
+                print(cm)
+            print("CU:")
+            for cu in cf_cuips:
+                print(cu)
+            print("CT:")
+            for ct in cf_ctips:
+                print(ct)
+                
             for domain, sub_domains in DOMAINS.items():
                 for sub_domain, lines in sub_domains.items():
                     temp_cf_cmips = cf_cmips.copy()
