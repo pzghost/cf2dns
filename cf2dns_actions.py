@@ -67,6 +67,8 @@ def changeDNS(line, s_info, c_info, domain, sub_domain, cloud):
         print("CHANGE DNS ERROR: ----Time: " + str(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())) + "----MESSAGE: LINE ERROR")
         return
     try:
+        for v in s_info:
+          print("LINE: ----Type: " + line + "----Location: " + v['colo'] + "----IP: " + v['ip'] + "----Latency: " + v['latency']+ "\n")
         create_num = AFFECT_NUM - len(s_info)
         if create_num == 0:
             for info in s_info:
@@ -124,6 +126,15 @@ def main(cloud):
             cf_cmips = cfips["info"]["CM"]
             cf_cuips = cfips["info"]["CU"]
             cf_ctips = cfips["info"]["CT"]
+            # 移动的只要香港IP
+            for i in cf_cmips[:]:
+                if i['colo'] != "HKG":
+                    cf_cmips.remove(i)
+            # 只需要延迟最小的 2 个节点
+            cf_cuips = sorted(cf_cuips, key=lambda i: i['latency'])[:2]
+            cf_cmips = sorted(cf_cmips, key=lambda i: i['latency'])[:2]
+            cf_ctips = sorted(cf_ctips, key=lambda i: i['latency'])[:2]
+
             for domain, sub_domains in DOMAINS.items():
                 for sub_domain, lines in sub_domains.items():
                     temp_cf_cmips = cf_cmips.copy()
