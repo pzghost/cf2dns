@@ -68,7 +68,7 @@ def changeDNS(line, s_info, c_info, domain, sub_domain, cloud):
         return
     try:
         for v in c_info:
-          print("LINE: ----Type: " + line + "----Location: " + v['colo'] + "----IP: " + v['ip'] + "----Latency: " + v['latency']+ "\n")
+          print("LINE: ----Type: " + line + "----Location: " + v['colo'] + "----IP: " + v['ip'] + "----Latency: " + str(v['latency']) + "\n")
         create_num = AFFECT_NUM - len(s_info)
         if create_num == 0:
             for info in s_info:
