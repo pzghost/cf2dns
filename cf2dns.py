@@ -79,6 +79,8 @@ def changeDNS(line, s_info, c_info, domain, sub_domain, cloud):
         log_cf2dns.logger.error("CHANGE DNS ERROR: ----Time: " + str(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())) + "----MESSAGE: LINE ERROR")
         return
     try:
+        for v in s_info:
+            log_cf2dns.logger.info("LINE: ----Type: " + line + "----Location: " + v['colo'] + "----IP: " + v['ip'] + "----Latency: " + v['latency']+ "\n")    
         create_num = AFFECT_NUM - len(s_info)
         if create_num == 0:
             for info in s_info:
@@ -144,13 +146,6 @@ def main(cloud):
             cf_cuips = sorted(cf_cuips, key=lambda i: i['latency'])[:2]
             cf_cmips = sorted(cf_cmips, key=lambda i: i['latency'])[:2]
             cf_ctips = sorted(cf_ctips, key=lambda i: i['latency'])[:2]
-
-            for cm in cf_cmips:
-                log_cf2dns.logger.info("CM: ----Latency: " + cm['latency'] + "----Location: " + cm['colo'] + "----IP: " + cm['ip'])
-            for cu in cf_cuips:
-                log_cf2dns.logger.info("CU: ----Latency: " + cu['latency'] + "----Location: " + cu['colo'] + "----IP: " + ct['ip'])
-            for ct in cf_ctips:
-                log_cf2dns.logger.info("CT: ----Latency: " + ct['latency'] + "----Location: " + ct['colo'] + "----IP: " + ct['ip'])
                 
             for domain, sub_domains in DOMAINS.items():
                 for sub_domain, lines in sub_domains.items():
