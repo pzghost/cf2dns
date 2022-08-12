@@ -136,6 +136,15 @@ def main(cloud):
             cf_cmips = cfips["info"]["CM"]
             cf_cuips = cfips["info"]["CU"]
             cf_ctips = cfips["info"]["CT"]
+            # 移动的只要香港IP
+            for i in cf_cmips[:]:
+                if i['colo'] != "HKG":
+                    cf_cmips.remove(i)
+            # 只需要延迟最小的 2 个节点
+            cf_cuips = sorted(cf_cuips, key=lambda i: i['latency'])[:2]
+            cf_cmips = sorted(cf_cmips, key=lambda i: i['latency'])[:2]
+            cf_ctips = sorted(cf_ctips, key=lambda i: i['latency'])[:2]
+
             for domain, sub_domains in DOMAINS.items():
                 for sub_domain, lines in sub_domains.items():
                     temp_cf_cmips = cf_cmips.copy()
