@@ -24,7 +24,7 @@ DOMAINS = json.loads(os.environ["DOMAINS"])  #{"hostmonit.com": {"@": ["CM","CU"
 SECRETID = os.environ["SECRETID"]    #'AKIDV**********Hfo8CzfjgN'
 SECRETKEY = os.environ["SECRETKEY"]   #'ZrVs*************gqjOp1zVl'
 #默认为普通版本 不用修改
-AFFECT_NUM = 2
+AFFECT_NUM = 1
 #DNS服务商 如果使用DNSPod改为1 如果使用阿里云解析改成2
 DNS_SERVER = 1
 #解析生效时间，默认为600秒 如果不是DNS付费版用户 不要修改!!!
@@ -130,10 +130,10 @@ def main(cloud):
             # for i in cf_cmips[:]:
             #     if i['colo'] != "HKG":
             #         cf_cmips.remove(i)
-            # 只需要延迟最小的 2 个节点
-            cf_cuips = sorted(cf_cuips, key=lambda i: i['latency'])[:2]
-            cf_cmips = sorted(cf_cmips, key=lambda i: i['latency'])[:2]
-            cf_ctips = sorted(cf_ctips, key=lambda i: i['latency'])[:2]
+            # 只需要延迟最小的 1 个节点
+            cf_cuips = sorted(cf_cuips, key=lambda i: i['latency'])[:1]
+            cf_cmips = sorted(cf_cmips, key=lambda i: i['latency'])[:1]
+            cf_ctips = sorted(cf_ctips, key=lambda i: i['latency'])[:1]
 
             for domain, sub_domains in DOMAINS.items():
                 for sub_domain, lines in sub_domains.items():
